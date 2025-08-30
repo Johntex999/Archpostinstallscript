@@ -15,7 +15,7 @@ fi
 
 # Install zen-browser-bin
 paru -S --noconfirm zen-browser-bin
-zen-browser &
+zen-browser
 
 # Go to Downloads
 mkdir -p ~/Downloads
