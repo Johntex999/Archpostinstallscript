@@ -36,3 +36,7 @@ chmod +x sine-linux-x64
 
 # Run with sudo
 sudo ./sine-linux-x64
+
+# Run second script
+chmod +x ml4wsetup.sh
+./ml4wsetup.sh
