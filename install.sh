@@ -31,12 +31,11 @@ url=$(curl -s https://api.github.com/repos/CosmoCreeper/Sine/releases/latest \
 # Download the file
 wget -O sine-linux-x64 "$url"
 
+# Run second Script in new Window
+kitty bash -c "cd ~/archpostinstallscript && chmod +x ml4wsetup.sh && ./ml4wsetup.sh; exec bash" &
+
 # Make it executable
 chmod +x sine-linux-x64
 
 # Run with sudo
 sudo ./sine-linux-x64
-
-# Run second script
-chmod +x ml4wsetup.sh
-./ml4wsetup.sh
