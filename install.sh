@@ -15,9 +15,10 @@ fi
 
 # Install zen-browser-bin
 paru -S --noconfirm zen-browser-bin
+zen-browser &
 
 # Go to Downloads
-mkdir ~/Downloads
+mkdir -p ~/Downloads
 cd ~/Downloads
 
 # Get latest release download URL for sine-linux-x64
