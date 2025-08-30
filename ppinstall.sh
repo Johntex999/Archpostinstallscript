@@ -1,5 +1,5 @@
 #!/bin/bash
-# Disable touchpads, install Steam & NetworkManager, setup prime-run for Steam
+# Disable touchpads, install Steam & NetworkManager, setup prime-run for Steam with proper scaling
 
 set -e
 
@@ -36,7 +36,7 @@ echo "Installing Steam..."
 sudo pacman -S --noconfirm steam
 
 # --- Install prime-run ---
-echo "Installing prime-run (optimus-manager package)..."
+echo "Installing prime-run (nvidia-prime package)..."
 sudo pacman -S --noconfirm nvidia-prime
 
 # --- Configure Steam desktop file ---
@@ -47,12 +47,9 @@ if [[ -f "$STEAM_DESKTOP_FILE" ]]; then
     sudo cp "$STEAM_DESKTOP_FILE" "${STEAM_DESKTOP_FILE}.bak"
 
     echo "Editing Steam desktop file to use prime-run and scale to 1.25..."
-    # Use sudo tee to overwrite Exec line
-    sudo sed -i 's|^Exec=.*|Exec=prime-run /usr/bin/steam %U|g' "$STEAM_DESKTOP_FILE"
-    # Add scaling environment variable if not present
-    if ! grep -q "SDL_VIDEO_HIGHDPI_DISABLED" "$STEAM_DESKTOP_FILE"; then
-        sudo sed -i '/^Exec=/i XDG_CURRENT_DESKTOP=GNOME SDL_VIDEO_HIGHDPI_DISABLED=0 STEAM_FRAME_FORCE_CLOSE=1 SDL_VIDEO_SCALE=1.25' "$STEAM_DESKTOP_FILE"
-    fi
+    # Prepend environment variable to Exec line
+    sudo sed -i 's|^Exec=.*|Exec=env STEAM_FORCE_DESKTOPUI_SCALING=1.25 prime-run /usr/bin/steam %U|' "$STEAM_DESKTOP_FILE"
+
     echo "Steam desktop file updated."
 else
     echo "Warning: Steam desktop file not found at $STEAM_DESKTOP_FILE"
