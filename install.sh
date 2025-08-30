@@ -17,6 +17,7 @@ fi
 paru -S --noconfirm zen-browser-bin
 
 # Go to Downloads
+mkdir ~/Downloads
 cd ~/Downloads
 
 # Get latest release download URL for sine-linux-x64
